@@ -1,17 +1,17 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 
-const Task = (task, onDelete) => {
+const Task = ({ text, day, onDelete }) => {
   return (
     <div className="task">
       <h3>
-        {task.text}
+        {text}
         <FaTimes
           style={{ color: "red", cursor: "pointer" }}
           onClick={onDelete}
         />
       </h3>
-      <p>{task.day}</p>
+      <p>{day}</p>
     </div>
   );
 };
