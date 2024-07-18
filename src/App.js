@@ -3,8 +3,7 @@ import Header from "./components/Header";
 function App() {
   return (
     <div className="App">
-      <Header /> 
-      <h1>Hello from Nsengi</h1>
+      <Header title={1} />
     </div>
   );
 }

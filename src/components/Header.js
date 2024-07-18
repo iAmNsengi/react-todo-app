@@ -1,11 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-function Header(props) {
+const Header = (props) => {
   return (
     <div>
-      <h1>The Header</h1>
+      <h1>{props.title}</h1>
     </div>
   );
-}
+};
 
+Header.defaultProps = {
+  title: "Task Tracker",
+};
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 export default Header;
