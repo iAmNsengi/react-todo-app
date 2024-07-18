@@ -26,9 +26,9 @@ function App() {
   ]);
 
   // delete task
-  const deleteTask = (id) => {
+  function deleteTask(id) {
     console.log("delete", id);
-  };
+  }
 
   return (
     <div className="container">
