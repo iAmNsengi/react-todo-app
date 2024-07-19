@@ -78,8 +78,8 @@ btn:active {
   align-items: center;
   justify-content: space-between;
 }
-.form-control-check label {
-  flex: 2;
+.form-control-check input {
+  flex: 3;
   height: 20px;
 }
 footer {

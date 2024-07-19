@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { FaPlus, FaMinus } from "react-icons/fa";
@@ -9,7 +8,7 @@ const Header = ({ title, onAdd, showAdd }) => {
   };
   return (
     <header className="header">
-      <h1>{title} </h1>
+      <h1>{title}</h1>
       <Button
         onClick={onClick}
         text={!showAdd ? <FaPlus /> : <FaMinus />}
@@ -19,11 +18,7 @@ const Header = ({ title, onAdd, showAdd }) => {
   );
 };
 
-Header.defaultProps = {
-  title: "Task Tracker",
-};
-
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 export default Header;
