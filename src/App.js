@@ -1,45 +1,40 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import "./index.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import AddTask from "./components/AddTask";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTasks, addTask, deleteTask, toggleReminder } from "./store.js";
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  
+  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const getTasks = async () => {
-      const tasksFromServer = await fetchTasks();
-      setTasks(tasksFromServer);
+      const tasksFromServer = await fetchTasksFromServer();
+      dispatch(fetchTasks(tasksFromServer));
     };
     getTasks();
-  }, []);
+  }, [dispatch]);
 
-  const fetchTasks = async () => {
+  const fetchTasksFromServer = async () => {
     const res = await fetch("http://localhost:5000/tasks");
     const data = await res.json();
     return data;
   };
 
-  // add task
-  const addTask = (task) => {
-    setTasks([{ ...task, id: tasks.length + 1 }, ...tasks]);
-    console.log({ ...task, id: tasks.length + 1 });
+  const onAddTask = (task) => {
+    dispatch(addTask(task));
   };
 
-  // delete task
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  const onDeleteTask = (id) => {
+    dispatch(deleteTask(id));
   };
-  // toggle reminder
-  const toggleReminder = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, reminder: !task.reminder } : task
-      )
-    );
-    console.log(tasks);
+
+  const onToggleReminder = (id) => {
+    dispatch(toggleReminder(id));
   };
 
   return (
@@ -49,10 +44,14 @@ function App() {
         showAdd={showAddTask}
         title="Task Tracker"
       />
-      {showAddTask ? <AddTask onAdd={addTask} /> : ""}
-      
+      {showAddTask && <AddTask onAdd={onAddTask} />}
+
       {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+        <Tasks
+          tasks={tasks}
+          onDelete={onDeleteTask}
+          onToggle={onToggleReminder}
+        />
       ) : (
         <h2>No tasks to display</h2>
       )}
